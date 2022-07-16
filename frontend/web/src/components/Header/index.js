@@ -12,13 +12,13 @@ function Header() {
           <img src={logo} alt="Logo"></img>
         </S.LeftSide>
         <S.RightSide>
-          <a href="#">INÍCIO</a>
+          <a href="/#">INÍCIO</a>
           <span className='dividir'></span>
-          <a href="#">NOVA TAREFA</a>
+          <a href="/#">NOVA TAREFA</a>
           <span className='dividir'></span>
-          <a href="#">SINCRONIZAR CELULAR</a>
+          <a href="/#">SINCRONIZAR CELULAR</a>
           <span className='dividir'></span>
-          <a href="#" id="notification">
+          <a href="/#" id="notification">
             <img src= {bell} alt="Notificação"></img>
             <span>5</span>
           </a>
