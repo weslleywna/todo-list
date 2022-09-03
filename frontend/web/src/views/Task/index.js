@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as S from './styles';
+import { useParams } from 'react-router-dom';
+import { format } from 'date-fns';
 
 import api from '../../services/api';
 
@@ -10,10 +12,11 @@ import typeIcons from '../../utils/typeIcons';
 import iconCalendar from '../../assets/calendar.png';
 import iconClock from '../../assets/clock.png';
 
-function Task() {
+function Task({ match }) {
+    const { id } = useParams();
     const [lateCount, setLateCount] = useState();
     const [type, setType] = useState();
-    const [id, setId] = useState();
+    const [_id, setId] = useState();
     const [done, setDone] = useState(false);
     const [title, setTitle] = useState();
     const [description, setDescription] = useState();
@@ -28,6 +31,17 @@ function Task() {
             });
     }
 
+    async function loadTaskDetails() {
+        await api.get(`/task/${id}`)
+            .then(response => {
+                setType(response.data.type);
+                setTitle(response.data.title);
+                setDescription(response.data.description);
+                setDate(format(new Date(response.data.when), 'yyyy-MM-dd'));
+                setHour(format(new Date(response.data.when), 'HH:mm'));
+            });
+    }
+
     async function save() {
         await api.post('/task', {
             macaddress,
@@ -37,27 +51,28 @@ function Task() {
             when: `${date}T${hour}:00.000`
         }).then(() => {
             alert('TAREFA CADASTRADA COM SUCESSO!')
-        }).catch((error)=> {
+        }).catch((error) => {
             if (error.response) {
-              // The request was made and the server responded with a status code
-              // that falls out of the range of 2xx
-              console.log(error.response.data);
-              console.log(error.response.status);
-              console.log(error.response.headers);
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
             } else if (error.request) {
-              // The request was made but no response was received
-              // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-              // http.ClientRequest in node.js
-              console.log(error.request);
+                // The request was made but no response was received
+                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                // http.ClientRequest in node.js
+                console.log(error.request);
             } else {
-              // Something happened in setting up the request that triggered an Error
-              console.log('Error', error.message);
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message);
             }
         });
     }
 
     useEffect(() => {
         lateVerify();
+        loadTaskDetails();
     }, []);
 
     return (

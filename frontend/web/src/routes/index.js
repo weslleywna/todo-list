@@ -10,6 +10,7 @@ export default function AppRoutes() {
             <Routes>
                 <Route path='/' element={<Home></Home>}></Route>
                 <Route path='/task' element={<Task></Task>}></Route>
+                <Route path='/task/:id' element={<Task></Task>}></Route>
             </Routes>
         </BrowserRouter>
     );
