@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import * as S from './styles';
+
+import isConnected from '../../utils/isConnected';
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -7,8 +10,24 @@ import Footer from '../../components/Footer';
 import Qr from 'qrcode.react'
 
 function QrCode() {
+    const [mac, setMac] = useState();
+    const [redirect, setRedirect] = useState(false);
+
+    async function saveMac() {
+        if (!mac) {
+            alert('Você precisa informar o número que apareceu no celular!');
+        }
+
+        await localStorage.setItem('@todo/macaddress', mac);
+        window.location.reload(() => {
+            setRedirect(true);
+        });
+    }
+
     return (
         <S.Container>
+            {redirect && isConnected && <Navigate to="/"></Navigate>}
+
             <Header></Header>
 
             <S.Content>
@@ -21,8 +40,8 @@ function QrCode() {
 
                 <S.ValidationCode>
                     <span>Digite o código presente no seu celular</span>
-                    <input type='text' />
-                    <button type='button'>
+                    <input type='text' onChange={e => setMac(e.target.value)} value={mac} />
+                    <button type='button' onClick={saveMac}>
                         SINCRONIZAR
                     </button>
                 </S.ValidationCode>

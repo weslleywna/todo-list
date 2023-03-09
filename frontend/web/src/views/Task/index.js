@@ -4,6 +4,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 
 import api from '../../services/api';
+import isConnected from '../../utils/isConnected';
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -22,7 +23,6 @@ function Task() {
     const [description, setDescription] = useState();
     const [date, setDate] = useState();
     const [hour, setHour] = useState();
-    const [macaddress, setMacaddress] = useState('11:11:11:11:11:11');
 
     async function loadTaskDetails() {
         await api.get(`/task/${id}`)
@@ -56,7 +56,7 @@ function Task() {
 
         if (id) {
             await api.put(`/task/${id}`, {
-                macaddress,
+                macaddress: isConnected,
                 done,
                 type,
                 title,
@@ -83,7 +83,7 @@ function Task() {
             });
         } else {
             await api.post('/task', {
-                macaddress,
+                macaddress: isConnected,
                 type,
                 title,
                 description,
@@ -121,6 +121,10 @@ function Task() {
     }
 
     useEffect(() => {
+        if (!isConnected){
+            setRedirect(true);
+        }
+
         loadTaskDetails();
     }, []);
 

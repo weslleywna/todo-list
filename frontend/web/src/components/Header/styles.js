@@ -33,6 +33,7 @@ export const RightSide = styled.div`
         background: none;
         border: none;
         cursor: pointer;
+        font-size: 16px;
     }
 
     a, button {
