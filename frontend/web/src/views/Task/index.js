@@ -15,7 +15,6 @@ import iconClock from '../../assets/clock.png';
 function Task() {
     const [redirect, setRedirect] = useState(false);
     const { id } = useParams();
-    const [lateCount, setLateCount] = useState();
     const [type, setType] = useState();
     const [_id, setId] = useState();
     const [done, setDone] = useState(false);
@@ -24,13 +23,6 @@ function Task() {
     const [date, setDate] = useState();
     const [hour, setHour] = useState();
     const [macaddress, setMacaddress] = useState('11:11:11:11:11:11');
-
-    async function lateVerify() {
-        await api.get(`/task/filter/late/11:11:11:11:11:11`)
-            .then(response => {
-                setLateCount(response.data.length);
-            });
-    }
 
     async function loadTaskDetails() {
         await api.get(`/task/${id}`)
@@ -129,14 +121,13 @@ function Task() {
     }
 
     useEffect(() => {
-        lateVerify();
         loadTaskDetails();
     }, []);
 
     return (
         <S.Container>
             {redirect && <Navigate to="/"></Navigate>}
-            <Header lateCount={lateCount} />
+            <Header/>
 
             <S.Form>
 
