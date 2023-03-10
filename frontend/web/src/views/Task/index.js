@@ -4,7 +4,6 @@ import { Navigate, useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 
 import api from '../../services/api';
-import isConnected from '../../utils/isConnected';
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -23,6 +22,8 @@ function Task() {
     const [description, setDescription] = useState();
     const [date, setDate] = useState();
     const [hour, setHour] = useState();
+
+    const isConnected = localStorage.getItem('@todo/macaddress');
 
     async function loadTaskDetails() {
         await api.get(`/task/${id}`)
@@ -121,17 +122,17 @@ function Task() {
     }
 
     useEffect(() => {
-        if (!isConnected){
+        if (!isConnected) {
             setRedirect(true);
         }
 
         loadTaskDetails();
-    }, []);
+    }, [isConnected, loadTaskDetails]);
 
     return (
         <S.Container>
             {redirect && <Navigate to="/"></Navigate>}
-            <Header/>
+            <Header />
 
             <S.Form>
 

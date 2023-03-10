@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import * as S from './styles';
 
 import api from '../../services/api';
-import isConnected from '../../utils/isConnected';
 
 import logo from '../../assets/logo.png';
 import bell from '../../assets/bell.png';
 
 function Header({ clickNotification }) {
   const [lateCount, setLateCount] = useState();
+
+  const isConnected = localStorage.getItem('@todo/macaddress');
 
   async function lateVerify() {
     await api.get(`/task/filter/late/${isConnected}`)

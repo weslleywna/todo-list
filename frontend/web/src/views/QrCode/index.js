@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import * as S from './styles';
 
-import isConnected from '../../utils/isConnected';
-
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
@@ -13,15 +11,16 @@ function QrCode() {
     const [mac, setMac] = useState();
     const [redirect, setRedirect] = useState(false);
 
+    const isConnected = localStorage.getItem('@todo/macaddress');
+
     async function saveMac() {
         if (!mac) {
             alert('Você precisa informar o número que apareceu no celular!');
         }
 
         await localStorage.setItem('@todo/macaddress', mac);
-        window.location.reload(() => {
-            setRedirect(true);
-        });
+
+        setRedirect(true);
     }
 
     return (

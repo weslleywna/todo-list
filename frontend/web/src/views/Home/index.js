@@ -3,7 +3,6 @@ import { Link, Navigate } from 'react-router-dom';
 import * as S from './styles';
 
 import api from '../../services/api';
-import isConnected from '../../utils/isConnected';
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -14,6 +13,8 @@ function Home() {
   const [filterActived, setFilterActived] = useState('all');
   const [tasks, setTasks] = useState([]);
   const [redirect, setRedirect] = useState(false);
+
+  const isConnected = localStorage.getItem('@todo/macaddress');
 
   async function loadTasks() {
     await api.get(`/task/filter/${filterActived}/${isConnected}`)
@@ -31,7 +32,7 @@ function Home() {
     if (!isConnected) {
       setRedirect(true);
     }
-  }, [filterActived, loadTasks]);
+  }, [filterActived, isConnected, loadTasks]);
 
   return (
     <S.Container>
