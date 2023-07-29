@@ -72,7 +72,7 @@ export default function Home() {
                 {
                     load ? <ActivityIndicator color='#EE6B26' size={50}></ActivityIndicator> :
                         tasks.map(t => {
-                            <TaskCard done={t.done} title={t.title} when={t.when}></TaskCard>
+                            <TaskCard done={t.done} title={t.title} when={t.when} type={t.type}></TaskCard>
                         })
                 }
             </ScrollView>
