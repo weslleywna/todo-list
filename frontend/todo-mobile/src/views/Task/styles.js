@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
   typeIconInative: {
     opacity: 0.5
   }
-
 });
 
 export default styles;

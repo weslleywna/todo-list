@@ -1,29 +1,26 @@
-import React, { useState } from 'react';
-import {
-  TouchableOpacity,
-  Image,
-  DatePickerIOS
-} from 'react-native';
+import React, { useState } from "react";
+import { TouchableOpacity, Image, DatePickerIOS } from "react-native";
 
-import styles from './styles';
+import styles from "./styles";
 
-import iconCalendar from '../../assets/calendar.png';
-import iconClock from '../../assets/clock.png';
+import iconCalendar from "../../assets/calendar.png";
+import iconClock from "../../assets/clock.png";
 
-export default function({type}){
-  const [datetime, setDateTime] = useState(new Date);
+export default function ({ type }) {
+  const [datetime, setDateTime] = useState(new Date());
 
-  return(
+  return (
     <TouchableOpacity style={styles.input}>
-      <DatePickerIOS 
+      <DatePickerIOS
         date={datetime}
         mode={type}
-        minimumDate={new Date}
+        minimumDate={new Date()}
         onDateChange={setDateTime}
       />
-      <Image 
-      style={styles.iconTextInput} 
-      source={type == 'date' ? iconCalendar : iconClock} />
+      <Image
+        style={styles.iconTextInput}
+        source={type == "date" ? iconCalendar : iconClock}
+      />
     </TouchableOpacity>
-  )
+  );
 }
